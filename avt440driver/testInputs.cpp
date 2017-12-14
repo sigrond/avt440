@@ -21,7 +21,7 @@ int main()
     while(runLoop)
     {
         testAVT440driver->openInputA();
-        for(int i=0;i<100;i++)
+        for(int i=0;i<20;i++)
         {
             printf("IA: %s\n",bitset<8>(testAVT440driver->getInput()).to_string().c_str());
             usleep(1000000);
@@ -29,7 +29,7 @@ int main()
         testAVT440driver->closeInput();
 
         testAVT440driver->openInputB();
-        for(int i=0;i<100;i++)
+        for(int i=0;i<20;i++)
         {
             printf("IB: %s\n",bitset<8>(testAVT440driver->getInput()).to_string().c_str());
             usleep(1000000);

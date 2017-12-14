@@ -112,7 +112,7 @@ unsigned char avt440driver::getInputA()
     printf("a: %d\n",a);
     #endif // DEBUG
     //STROBE ~ AUTO ~ INIT 0 SELECT ~   IRQviaACK 0    bi-directional-mode 0
-    outb(STROBE | AUTO | DIRECTION,BASE+2);//STROBE 0 AUTO 0 INIT 0 SELECT 1
+    outb(STROBE | SELECT | DIRECTION,BASE+2);//STROBE 0 AUTO 0 INIT 0 SELECT 1
     #ifdef DEBUG
     a=inb(BASE);
     printf("a: %d\n",a);
@@ -134,7 +134,7 @@ unsigned char avt440driver::getInputB()
 {
     unsigned char a=0;
     outb(0,BASE);
-    outb(STROBE | SELECT | DIRECTION,BASE+2);//STROBE 0 AUTO 1  INIT 0 SELECT 0
+    outb(STROBE | AUTO | DIRECTION,BASE+2);//STROBE 0 AUTO 1  INIT 0 SELECT 0
     usleep(WAIT_TIME);//czas na przepisanie z wejsc na wyjscai bufora IC5
     a=inb(BASE);
     outb(STROBE,BASE+2);
@@ -190,6 +190,7 @@ void avt440driver::setInputBtoOutputB()
     usleep(WAIT_TIME);
 }
 
+//STROBE ~ AUTO ~ INIT 0 SELECT ~   IRQviaACK 0    bi-directional-mode 0
 void avt440driver::openInputA()
 {
     outb(0,BASE);
@@ -222,6 +223,33 @@ unsigned char avt440driver::getInput()
     usleep(WAIT_TIME);
     return a;
 }
+
+void avt440driver::setControll(unsigned char c)
+{
+    outb(c,BASE+2);
+    usleep(WAIT_TIME);
+}
+
+//STROBE ~ AUTO ~ INIT 0 SELECT ~   IRQviaACK 0    bi-directional-mode 0
+unsigned char avt440driver::getControllFromDevice()
+{
+    unsigned char a=0;
+    outb(INIT,BASE+2);//piny rejestru kontrolnego do stanu wysokiej impedancji
+    usleep(WAIT_TIME);
+    a=inb(BASE+2);//teraz powinno sie dać odczytać co jest po drugiej stronie
+    usleep(WAIT_TIME);
+    return a;
+}
+
+unsigned char avt440driver::getControll()
+{
+    unsigned char a=0;
+    a=inb(BASE+2);//zwykły odczyt rejestru kontrolnego, można zobaczyć czy są jakieś interferencjie ze wcześniej ustawionymi wartościami
+    usleep(WAIT_TIME);
+    return a;
+}
+
+
 
 
 

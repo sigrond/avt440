@@ -96,6 +96,28 @@ class avt440driver
          */
         unsigned char getInput();
 
+        /** \brief ustawienie bitów rejestru kontroli
+         *
+         * \param char unsigned
+         * \return void
+         *
+         */
+        void setControll(unsigned char);
+
+        /** \brief specjalne pobranie wartości przez rejestr kontroli
+         *
+         * \return unsigned char
+         *
+         */
+        unsigned char getControllFromDevice();
+
+        /** \brief zwykłe pobranie rejestru kontroli
+         *
+         * \return unsigned char
+         *
+         */
+        unsigned char getControll();
+
 
     protected:
 
