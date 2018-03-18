@@ -21,7 +21,6 @@
 avt440driver::avt440driver() : status(0), InA(0), InB(0), OutA(0), OutB(0), ctl(0)
 {
     //ctor
-    if(ioperm(BASE,3,1))
     {
         status=-1;
     }
